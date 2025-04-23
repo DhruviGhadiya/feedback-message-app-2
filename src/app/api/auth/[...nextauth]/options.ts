@@ -5,10 +5,10 @@ import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User';
 
 
-interface Credentials {
-  identifier: string;
-  password: string;
-}
+// interface Credentials {
+//   identifier: string;
+//   password: string;
+// }
 
 interface AuthorizedUser {
   _id: string;
