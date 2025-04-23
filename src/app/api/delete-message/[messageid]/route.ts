@@ -3,7 +3,6 @@ import UserModel from "@/model/User";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { User } from "next-auth";
-import mongoose from "mongoose";
 
 
 export async function DELETE(request: Request, { params }: { params: { messageid: string } }) {
