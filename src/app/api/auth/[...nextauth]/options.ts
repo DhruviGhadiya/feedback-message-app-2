@@ -4,6 +4,21 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User';
 
+
+interface Credentials {
+  identifier: string;
+  password: string;
+}
+
+interface AuthorizedUser {
+  _id: string;
+  email: string;
+  username: string;
+  password: string;
+  isVerified: boolean;
+  isAcceptingMessage: boolean;
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -13,7 +28,11 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials: any):Promise<any>{
+      async authorize(credentials: Credentials): Promise<AuthorizedUser | null> {
+        if (!credentials) {
+          throw new Error("No credentials provided");
+        }
+        
         await dbConnect();
         try {
           const user = await UserModel.findOne({
@@ -21,7 +40,7 @@ export const authOptions: NextAuthOptions = {
               { email: credentials.identifier },
               { username: credentials.identifier },
             ],
-          });
+          }).lean<AuthorizedUser>();
           if (!user) {
             throw new Error('No user found with this email');
           }
@@ -37,8 +56,11 @@ export const authOptions: NextAuthOptions = {
           } else {
             throw new Error('Incorrect password');
           }
-        } catch (err: any) {
-          throw new Error(err);
+        } catch (err) {
+          if (err instanceof Error) {
+            throw new Error(err.message);
+          }
+          throw new Error('Unexpected error during authorization');
         }
       },
     }),
