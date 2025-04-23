@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from "zod";
 
-const page = () => {
+const Page = () => {
   const initialMessageString =
     "What's your favorite movie?-Do you have any pets?-What's your dream job?";
 
@@ -184,4 +184,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
