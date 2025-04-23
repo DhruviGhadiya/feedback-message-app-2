@@ -3,8 +3,10 @@ import React, { useState } from 'react'
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from 'next/link';
-import { useForm } from "react-hook-form";import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useForm } from "react-hook-form"; 
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation'; 
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
 import { signInSchema } from '@/schemas/signInSchema';
@@ -37,11 +39,11 @@ const Page = () => {
 
     if (result?.error) {
       if (result.error === 'CredentialsSignin') {
-        toast('Login Failed',{
+        toast('Login Failed', {
           description: 'Incorrect username or password'
         });
       } else {
-        toast('Error',{
+        toast('Error', {
           description: result.error
         });
       }
@@ -50,6 +52,7 @@ const Page = () => {
     if (result?.url) {
       router.replace('/dashboard')
     }
+    setIsSubmitting(false);
   }
 
 
@@ -95,7 +98,9 @@ const Page = () => {
                 </FormItem>
               )}
             />
-            <Button className='w-full' type="submit">Sign In</Button>
+            <Button className='w-full' type="submit">
+              {isSubmitting ? "Loading..." : "Sign In"}
+            </Button>
           </form>
         </Form>
         <div className="text-center mt-4">
