@@ -22,7 +22,7 @@ const Page = () => {
 
   const { username } = useParams();
   const [messages, setMessages] = useState<string[] | { error: string }>(initialMessageString.split('-'));
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
 
   const suggestMessages = async () => {
