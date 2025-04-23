@@ -73,7 +73,7 @@ const Page = () => {
             setIsLoading(false);
             setIsSwitchLoading(false);
         }
-    }, [setMessages, setIsLoading, toast])
+    }, [setMessages, setIsLoading])
 
     useEffect(() => {
         if (!session || !session.user) return
