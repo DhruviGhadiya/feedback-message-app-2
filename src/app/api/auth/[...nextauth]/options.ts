@@ -11,7 +11,7 @@ import UserModel from '@/model/User';
 // }
 
 interface AuthorizedUser {
-  _id: string;
+  id: string;
   email: string;
   username: string;
   password: string;
@@ -25,15 +25,15 @@ export const authOptions: NextAuthOptions = {
       id: 'credentials',
       name: 'Credentials',
       credentials: {
-        email: { label: 'Email', type: 'text' },
-        // identifier: {
-        //   label: "Identifier",
-        //   type: "text",
-        //   placeholder: "your-identifier",
-        // },
+        // email: { label: 'Email', type: 'text' },
+        identifier: {
+          label: "Identifier",
+          type: "text",
+          placeholder: "your-identifier",
+        },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
+      async authorize(credentials){
         if (!credentials) {
           throw new Error("No credentials provided");
         }
