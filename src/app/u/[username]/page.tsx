@@ -23,6 +23,7 @@ const Page = () => {
   const { username } = useParams();
   const [messages, setMessages] = useState<string[] | { error: string }>(initialMessageString.split('-'));
   const [loading, setLoading] = useState<boolean>(false);
+  const [isSending,setIsSending]=useState<boolean>(false);
 
 
   const suggestMessages = async () => {
@@ -68,7 +69,7 @@ const Page = () => {
   };
 
   const sendMessages = async (data: z.infer<typeof messageSchema>) => {
-    setLoading(true);
+    setIsSending(true);
     try {
       const res = await axios.post('/api/send-message', {
         username,
@@ -84,7 +85,7 @@ const Page = () => {
       });
     }
     finally {
-      setLoading(false);
+      setIsSending(false);
     }
   }
 
@@ -123,13 +124,13 @@ const Page = () => {
               )}
             />
             <div className="flex justify-center">
-              {loading ? (
+              {isSending ? (
                 <Button disabled>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Please wait
                 </Button>
               ) : (
-                <Button type="submit" disabled={loading || !messageContent}>
+                <Button type="submit" disabled={isSending || !messageContent}>
                   Send It
                 </Button>
               )}
