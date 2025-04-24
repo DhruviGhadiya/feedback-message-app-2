@@ -26,13 +26,18 @@ export const authOptions: NextAuthOptions = {
       name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'text' },
+        // identifier: {
+        //   label: "Identifier",
+        //   type: "text",
+        //   placeholder: "your-identifier",
+        // },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials){
+      async authorize(credentials) {
         if (!credentials) {
           throw new Error("No credentials provided");
         }
-        
+
         await dbConnect();
         try {
           const user = await UserModel.findOne({
